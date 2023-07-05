@@ -6,8 +6,12 @@ import 'flatpickr/dist/flatpickr.min.css';
 const inputFlatpickr = document.querySelector('#datetime-picker');
 const startBtn = document.querySelector('[data-start]');
 const timerChange = document.querySelector('.timer');
+const daysTimer = document.querySelector('[data-days]');
+const hoursTimer = document.querySelector('[data-hours]');
+const minutesTimer = document.querySelector('[data-minutes]');
+const secondsTimer = document.querySelector('[data-seconds]');
 
-let timerId = null;
+let timerId = 1;
 
 /*flatpickr*/
 const options = {
@@ -29,14 +33,17 @@ startBtn.addEventListener('click', () => {
     window.alert('Please choose a date in the future');
     return;
   }
+
   timerId = setInterval(() => {
     const remainingTime = selectedDate - new Date();
     if (remainingTime <= 0) {
       clearInterval(timerId);
     } else {
       const countdown = convertMs(remainingTime);
-      const formattedTime = `Days: ${countdown.days}, Hours: ${countdown.hours}, Minutes: ${countdown.minutes}, Seconds: ${countdown.seconds}`;
-      timerChange.textContent = formattedTime;
+      daysTimer.textContent = addLeadingZero(countdown.days);
+      hoursTimer.textContent = addLeadingZero(countdown.hours);
+      minutesTimer.textContent = addLeadingZero(countdown.minutes);
+      secondsTimer.textContent = addLeadingZero(countdown.seconds);
     }
   }, 1000);
 });
@@ -60,7 +67,7 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-function formatTimeUnit(timeUnit) {
+function addLeadingZero(timeUnit) {
   return timeUnit.toString().padStart(2, '0');
 }
 
