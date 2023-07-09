@@ -29,7 +29,7 @@ flatpickr(inputFlatpickr, options);
 /*event for button start */
 startBtn.addEventListener('click', () => {
   const selectedDate = new Date(inputFlatpickr.value);
-  if (selectedDate > new Date()) {
+  if (selectedDate < new Date()) {
     window.alert('Please choose a date in the future');
     return;
   }
